@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { Ref } from 'vue'
+import { ref, type Ref } from 'vue'
 import type { LoginData } from '@/model/index'
 import HttpService from '@/service/HttpService'
 import { useAuthStore } from '@/stores/AuthStore'
@@ -16,6 +15,7 @@ const userData: Ref<LoginData> = ref({
 const email = 'email'
 const password = 'password'
 const submitLogin = async () => {
+  console.log("userdata", userData)
   const response = await HttpService.login(userData.value)
   if (response.data) {
     authStore.setAccessToken(response.data.accessToken)

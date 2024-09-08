@@ -35,5 +35,5 @@ export interface AuthResponse {
 
 export interface RegistrationData {
   eventId: number
-  user: User
+  appUser: Partial<User>
 }

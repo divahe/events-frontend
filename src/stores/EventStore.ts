@@ -1,11 +1,15 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { Event } from '@/model/index';
+import HttpService from '@/service/HttpService';
+import { useSnackbarStore } from '@/stores/SnackbarStore'
 
 export const useEventStore = defineStore('EventStore', () => {
+  const snackbarStore = useSnackbarStore()
   const showRegistrationForm = ref<boolean>(false)
   const showAddEventForm = ref<boolean>(false)
   const selectedEvent = ref<Event | null>(null)
+  const events = ref<Event[]>([])
 
   const closeRegistrationForm = () => {
     showRegistrationForm.value = false
@@ -32,6 +36,15 @@ export const useEventStore = defineStore('EventStore', () => {
     return selectedEvent.value
   }
 
+  const loadEvents = async () => {
+    const response = await HttpService.getEvents()
+    if (response.data) {
+      events.value = response.data
+    } else if (response.error) {
+      snackbarStore.setMessage(response.error)
+    }
+  }
+
   const removeEvent = () => {
     selectedEvent.value = null
   }
@@ -45,7 +58,9 @@ export const useEventStore = defineStore('EventStore', () => {
     closeAddEventForm,
     getEvent,
     setEvent,
+    loadEvents,
     removeEvent,
-    selectedEvent
+    selectedEvent,
+    events
   }
 })

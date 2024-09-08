@@ -41,7 +41,6 @@ const router = createRouter({
 export default router
 
 router.beforeEach(async (to) => {
-  // redirect to login page if not logged in and trying to access a restricted page
   const publicPages: RouteRecordNameGeneric[] = ['login', 'home']
   const auth = useAuthStore()
   if (!publicPages.includes(to.name) && !auth.isLoggedIn) {

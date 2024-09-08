@@ -1,22 +1,17 @@
 <script setup lang="ts">
 import type { Event, User, RegistrationData } from '@/model/index'
-import { ref } from 'vue'
+import { ref, toRaw } from 'vue'
 import { useEventStore } from '@/stores/EventStore'
 import { useSnackbarStore } from '@/stores/SnackbarStore'
 import HttpService from '@/service/HttpService'
 const eventStore = useEventStore()
 const snackbarStore = useSnackbarStore()
-// const props = defineProps<{
-//   selectedEvent: Event
-// }>()
 
 const valid = ref(false)
-const user = ref<User>({
-  id: 0,
-  email: '',
+const user = ref<Partial<User>>({
+  id: undefined,
   firstName: '',
   lastName: '',
-  username: '',
   role: 'USER',
   idCode: ''
 })
@@ -25,7 +20,7 @@ const submitRegistration = async () => {
   if (eventStore.selectedEvent) {
     const registrationData: RegistrationData = {
       eventId: eventStore.selectedEvent.id,
-      user: user.value
+      appUser: user.value as Partial<User>
     }
     const response = await HttpService.register(registrationData)
     if (response.data) {
@@ -50,7 +45,7 @@ const submitRegistration = async () => {
         </v-form>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="primary" @click="submitRegistration">Submit</v-btn>
+        <v-btn color="primary" @click="submitRegistration()">Submit</v-btn>
         <v-btn @click="eventStore.closeRegistrationForm()">Cancel</v-btn>
       </v-card-actions>
     </v-card>

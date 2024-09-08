@@ -75,7 +75,7 @@ export default class HttpService {
     error?: string;
   }> => {
     return this.handleRequest<AuthResponse>(
-      axios.post(this.EVENTREGISTRATION_URL, registrationData)
+      axiosInstance.put(this.EVENTREGISTRATION_URL, registrationData)
     );
   }
 

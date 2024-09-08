@@ -23,6 +23,7 @@ const addEvent = async () => {
     const response = await axiosInstance.post('events', newEvent.value)
     console.log(response.data)
     eventStore.closeAddEventForm()
+    eventStore.loadEvents()
   } catch (error) {
     console.error('Failed to add event:', error)
   }
