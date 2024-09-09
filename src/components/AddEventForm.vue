@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc';
+import utc from 'dayjs/plugin/utc'
 import type { Event } from '@/model/index'
 import axiosInstance from '@/helpers/AxiosConfig'
 import { useEventStore } from '@/stores/EventStore'
-dayjs.extend(utc);
+dayjs.extend(utc)
 const eventStore = useEventStore()
 
 const newEvent = ref<Partial<Event>>({
@@ -16,6 +16,17 @@ const newEvent = ref<Partial<Event>>({
 })
 const valid = ref(false)
 
+watch(
+  () => eventStore.showAddEventForm,
+  () => {
+    newEvent.value = {
+      name: '',
+      participants: 0,
+      time: '',
+      appUsers: []
+    }
+  }
+)
 
 const addEvent = async () => {
   newEvent.value.time = dayjs(newEvent.value.time).utc().format()
@@ -28,7 +39,6 @@ const addEvent = async () => {
     console.error('Failed to add event:', error)
   }
 }
-
 </script>
 
 <template>

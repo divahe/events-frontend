@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Event, User, RegistrationData } from '@/model/index'
-import { ref, toRaw } from 'vue'
+import type { User, RegistrationData } from '@/model/index'
+import { ref, watch } from 'vue'
 import { useEventStore } from '@/stores/EventStore'
 import { useSnackbarStore } from '@/stores/SnackbarStore'
 import HttpService from '@/service/HttpService'
@@ -16,6 +16,19 @@ const user = ref<Partial<User>>({
   idCode: ''
 })
 
+watch(
+  () => eventStore.showRegistrationForm,
+  () => {
+    user.value = {
+      id: undefined,
+      firstName: '',
+      lastName: '',
+      role: 'USER',
+      idCode: ''
+    }
+  }
+)
+
 const submitRegistration = async () => {
   if (eventStore.selectedEvent) {
     const registrationData: RegistrationData = {
@@ -26,6 +39,7 @@ const submitRegistration = async () => {
     if (response.data) {
       eventStore.closeRegistrationForm()
       snackbarStore.setMessage('Registration was successful')
+      eventStore.loadEvents()
     } else if (response.error) {
       snackbarStore.setMessage(response.error)
     }

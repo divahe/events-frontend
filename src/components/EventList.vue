@@ -26,14 +26,14 @@ const register = (event: Event) => {
 <template>
   <v-container>
     <v-row>
-      <v-col v-for="event in eventStore.events" :key="event.id">
+      <v-col class="event-column" v-for="event in eventStore.events" :key="event.id">
         <v-card>
           <v-card-title>{{ event.name }}</v-card-title>
           <v-card-subtitle>Start Time: {{ formatTime(event.time) }}</v-card-subtitle>
           <v-card-text>
             <p>Capacity: {{ event.appUsers.length }} / {{ event.participants }}</p>
             <v-progress-linear
-              :value="(event.appUsers.length / event.participants) * 100"
+              :model-value="(event.appUsers.length / event.participants) * 100"
               height="8"
               color="primary"
             ></v-progress-linear>
@@ -60,5 +60,8 @@ const register = (event: Event) => {
 .error--text {
   color: red;
   font-weight: bold;
+}
+.event-column {
+  min-width: 20em;
 }
 </style>
