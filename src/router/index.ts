@@ -1,8 +1,4 @@
-import {
-  createRouter,
-  createWebHistory,
-  type RouteRecordNameGeneric
-} from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecordNameGeneric } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import AuthenticationView from '@/views/AuthenticationView.vue'
 import { useAuthStore } from '@/stores/AuthStore'

@@ -2,6 +2,10 @@
 import router from '@/router'
 import { useAuthStore } from '@/stores/AuthStore'
 import { useEventStore } from '@/stores/EventStore'
+import HttpService from '@/service/HttpService'
+import { useSnackbarStore } from '@/stores/SnackbarStore'
+
+const snackbarStore = useSnackbarStore()
 const authStore = useAuthStore()
 const eventStore = useEventStore()
 
@@ -9,9 +13,13 @@ const openLogin = () => {
   router.push('/login')
 }
 
-const logOut = () => {
-  authStore.logout()
-  router.push('/')
+const logOut = async () => {
+  const response = await HttpService.logout()
+  if (response.error) {
+    snackbarStore.setMessage(response.error)
+  } else {
+    authStore.logout()
+  }
 }
 
 const homePage = () => {
@@ -21,8 +29,6 @@ const homePage = () => {
 const addEvent = () => {
   eventStore.openAddEventForm()
 }
-
-
 </script>
 <template>
   <v-card class="mx-auto">

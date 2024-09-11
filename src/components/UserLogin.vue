@@ -15,10 +15,10 @@ const userData: Ref<LoginData> = ref({
 const email = 'email'
 const password = 'password'
 const submitLogin = async () => {
-  console.log("userdata", userData)
   const response = await HttpService.login(userData.value)
   if (response.data) {
     authStore.setAccessToken(response.data.accessToken)
+    authStore.setRefreshToken(response.data.refreshToken)
     router.push('/')
   } else if (response.error) {
     snackbarStore.setMessage(response.error)

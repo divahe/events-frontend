@@ -3,7 +3,7 @@ import TopMenu from './components/TopMenu.vue'
 </script>
 
 <template>
-<v-app>
+  <v-app>
     <top-menu />
     <v-main>
       <router-view />
@@ -11,5 +11,4 @@ import TopMenu from './components/TopMenu.vue'
   </v-app>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

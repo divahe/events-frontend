@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import type { Event } from '@/model/index';
-import HttpService from '@/service/HttpService';
+import type { Event } from '@/model/index'
+import HttpService from '@/service/HttpService'
 import { useSnackbarStore } from '@/stores/SnackbarStore'
 
 export const useEventStore = defineStore('EventStore', () => {
@@ -25,7 +25,7 @@ export const useEventStore = defineStore('EventStore', () => {
 
   const openAddEventForm = () => {
     showAddEventForm.value = true
-    console.log("true")
+    console.log('true')
   }
 
   const setEvent = (event: Event) => {

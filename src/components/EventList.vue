@@ -16,7 +16,7 @@ const canRegister = (event: Event): boolean => {
 
 const register = (event: Event) => {
   if (canRegister(event)) {
-    console.log("can register")
+    console.log('can register')
     eventStore.openRegistrationForm()
     eventStore.setEvent(event)
   }
@@ -39,11 +39,7 @@ const register = (event: Event) => {
             ></v-progress-linear>
           </v-card-text>
           <v-card-actions>
-            <v-btn
-              :disabled="!canRegister(event)"
-              @click.prevent="register(event)"
-              color="primary"
-            >
+            <v-btn :disabled="!canRegister(event)" @click.prevent="register(event)" color="primary">
               Register
             </v-btn>
             <v-spacer></v-spacer>

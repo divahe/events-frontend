@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import UserLogin from '@/components/UserLogin.vue';
+import UserLogin from '@/components/UserLogin.vue'
 </script>
 <template>
   <v-container>
@@ -7,6 +7,4 @@ import UserLogin from '@/components/UserLogin.vue';
   </v-container>
 </template>
 
-<style>
-
-</style>
+<style></style>

@@ -3,9 +3,11 @@ import { ref, watch } from 'vue'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import type { Event } from '@/model/index'
-import axiosInstance from '@/helpers/AxiosConfig'
 import { useEventStore } from '@/stores/EventStore'
+import HttpService from '@/service/HttpService'
+import { useSnackbarStore } from '@/stores/SnackbarStore'
 dayjs.extend(utc)
+const snackbarStore = useSnackbarStore()
 const eventStore = useEventStore()
 
 const newEvent = ref<Partial<Event>>({
@@ -30,13 +32,13 @@ watch(
 
 const addEvent = async () => {
   newEvent.value.time = dayjs(newEvent.value.time).utc().format()
-  try {
-    const response = await axiosInstance.post('events', newEvent.value)
-    console.log(response.data)
+  const response = await HttpService.addEvent(newEvent.value)
+  if (response.data) {
     eventStore.closeAddEventForm()
     eventStore.loadEvents()
-  } catch (error) {
-    console.error('Failed to add event:', error)
+  } else if (response.error) {
+    console.error('Failed to add event:', response.error)
+    snackbarStore.setMessage(response.error)
   }
 }
 </script>
