@@ -17,11 +17,10 @@ export default class HttpService {
   } {
     if (axios.isAxiosError(error)) {
       if (error.response) {
-        console.error(`API Error: ${error.response.status} - ${error.response.statusText}`)
+        console.error(`API Error: ${error.response.status} - ${error.response.data.error}`)
         return {
           status: error.response.status,
-          error: `API Error: ${error.response.status} - ${error.response.statusText}`,
-          data: error.response.data
+          error: error.response.data
         }
       } else if (error.request) {
         console.error('API Error: No response received')
@@ -78,7 +77,6 @@ export default class HttpService {
       authStore.setAccessToken(newAccessToken)
       authStore.setRefreshToken(newRefreshToken)
       originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`
-      console.log('originalRequest', originalRequest)
       return axiosInstance(originalRequest)
     } catch (refreshError) {
       console.error('Token refresh failed', refreshError)

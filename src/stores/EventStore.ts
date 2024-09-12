@@ -25,7 +25,6 @@ export const useEventStore = defineStore('EventStore', () => {
 
   const openAddEventForm = () => {
     showAddEventForm.value = true
-    console.log('true')
   }
 
   const setEvent = (event: Event) => {

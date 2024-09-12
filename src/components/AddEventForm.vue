@@ -16,7 +16,6 @@ const newEvent = ref<Partial<Event>>({
   time: '',
   appUsers: []
 })
-const valid = ref(false)
 
 watch(
   () => eventStore.showAddEventForm,
@@ -29,6 +28,15 @@ watch(
     }
   }
 )
+
+const formValid = (): boolean => {
+  return (
+    newEvent.value.name !== '' &&
+    newEvent.value.participants != undefined &&
+    newEvent.value.participants > 0 &&
+    newEvent.value.time !== ''
+  )
+}
 
 const addEvent = async () => {
   newEvent.value.time = dayjs(newEvent.value.time).utc().format()
@@ -48,13 +56,12 @@ const addEvent = async () => {
     <v-card>
       <v-card-title>Add New Event</v-card-title>
       <v-card-text>
-        <v-form ref="eventForm" v-model="valid">
-          <v-text-field v-model="newEvent.name" label="Event Name" required></v-text-field>
+        <v-form ref="eventForm">
+          <v-text-field v-model="newEvent.name" label="Event Name"></v-text-field>
           <v-text-field
             v-model="newEvent.participants"
             label="Max Participants"
             type="number"
-            required
           ></v-text-field>
           <v-text-field
             v-model="newEvent.time"
@@ -66,7 +73,7 @@ const addEvent = async () => {
       </v-card-text>
       <v-card-actions>
         <v-btn @click.prevent="eventStore.closeAddEventForm()">Cancel</v-btn>
-        <v-btn color="primary" @click.prevent="addEvent()">Save</v-btn>
+        <v-btn :disabled="!formValid()" color="primary" @click.prevent="addEvent()">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

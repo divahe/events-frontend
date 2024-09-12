@@ -16,12 +16,12 @@ const email = 'email'
 const password = 'password'
 const submitLogin = async () => {
   const response = await HttpService.login(userData.value)
-  if (response.data) {
+  if (response.status == 200 && response.data) {
     authStore.setAccessToken(response.data.accessToken)
     authStore.setRefreshToken(response.data.refreshToken)
     router.push('/')
-  } else if (response.error) {
-    snackbarStore.setMessage(response.error)
+  } else if (response.status == 401) {
+    snackbarStore.setMessage("Login failed")
   }
 }
 </script>

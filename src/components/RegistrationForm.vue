@@ -7,7 +7,6 @@ import HttpService from '@/service/HttpService'
 const eventStore = useEventStore()
 const snackbarStore = useSnackbarStore()
 
-const valid = ref(false)
 const user = ref<Partial<User>>({
   id: undefined,
   firstName: '',
@@ -15,6 +14,10 @@ const user = ref<Partial<User>>({
   role: 'USER',
   idCode: ''
 })
+
+const formValid = (): boolean => {
+  return user.value.firstName !== '' && user.value.lastName !== '' && user.value.idCode !== ''
+}
 
 watch(
   () => eventStore.showRegistrationForm,
@@ -52,15 +55,15 @@ const submitRegistration = async () => {
     <v-card>
       <v-card-title>Register for {{ eventStore.selectedEvent?.name }}</v-card-title>
       <v-card-text>
-        <v-form ref="registrationForm" v-model="valid">
-          <v-text-field v-model="user.firstName" label="First Name" required></v-text-field>
-          <v-text-field v-model="user.lastName" label="Last Name" required></v-text-field>
-          <v-text-field v-model="user.idCode" label="ID Code" required></v-text-field>
+        <v-form ref="registrationForm">
+          <v-text-field v-model="user.firstName" label="First Name"></v-text-field>
+          <v-text-field v-model="user.lastName" label="Last Name"></v-text-field>
+          <v-text-field v-model="user.idCode" label="ID Code"></v-text-field>
         </v-form>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="primary" @click="submitRegistration()">Submit</v-btn>
         <v-btn @click="eventStore.closeRegistrationForm()">Cancel</v-btn>
+        <v-btn :disabled="!formValid()" color="primary" @click="submitRegistration()">Submit</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

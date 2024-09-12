@@ -16,7 +16,6 @@ const canRegister = (event: Event): boolean => {
 
 const register = (event: Event) => {
   if (canRegister(event)) {
-    console.log('can register')
     eventStore.openRegistrationForm()
     eventStore.setEvent(event)
   }

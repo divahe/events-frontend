@@ -29,7 +29,6 @@ export interface LoginData {
 export interface AuthResponse {
   accessToken: string
   refreshToken: string
-  userId: number
 }
 
 export interface RegistrationData {

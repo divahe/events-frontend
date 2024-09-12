@@ -40,7 +40,6 @@ router.beforeEach(async (to) => {
   const publicPages: RouteRecordNameGeneric[] = ['login', 'home']
   const auth = useAuthStore()
   if (!publicPages.includes(to.name) && !auth.isLoggedIn) {
-    console.log('redirecting', to.name)
     return '/login'
   }
 })
