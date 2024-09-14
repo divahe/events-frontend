@@ -20,8 +20,8 @@ const submitLogin = async () => {
     authStore.setAccessToken(response.data.accessToken)
     authStore.setRefreshToken(response.data.refreshToken)
     router.push('/')
-  } else if (response.status == 401) {
-    snackbarStore.setMessage("Login failed")
+  } else if (response.error) {
+    snackbarStore.setMessage("Login failed: " + response.error)
   }
 }
 </script>
