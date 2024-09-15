@@ -50,7 +50,6 @@ export default class HttpService {
   }> {
     try {
       const response = await request
-      console.log('response', response.data)
       return {
         status: response.status,
         data: response.data
@@ -59,7 +58,7 @@ export default class HttpService {
       if (axios.isAxiosError(error) && error.response?.status === 403) {
         const retryRequest = await this.handle403Error(error.config)
         if (retryRequest) {
-          return this.handleRequest(retryRequest) // Retry original request
+          return this.handleRequest(retryRequest)
         }
       }
       return this.handleErrorResponse(error)
